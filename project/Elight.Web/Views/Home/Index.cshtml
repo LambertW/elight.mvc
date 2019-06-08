@@ -33,16 +33,6 @@
                 </span>
             </div>
             <ul class="layui-nav">
-                <li class="layui-nav-item btn-donate">
-                    <a href="#">
-                        <i class="fa fa fa-heart" aria-hidden="true"></i>
-                    </a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="#">
-                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                    </a>
-                </li>
                 <li class="layui-nav-item">
                     <a href="#">
                         <i class="fa fa-bell" aria-hidden="true"></i>
@@ -141,12 +131,6 @@
         tab = layui.tab({
             elem: '.layui-tab',
             maxSetting: { max: 15 }
-        });
-
-        layui.donate({
-            elem: '.btn-donate',
-            alipay_url: 'http://cdn.codergao.cn/image/aliyun.png',
-            wechat_url: 'http://cdn.codergao.cn/image/wchat.png'
         });
 
         $(window).on('resize', function () {
