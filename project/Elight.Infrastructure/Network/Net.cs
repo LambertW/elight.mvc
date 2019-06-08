@@ -75,7 +75,7 @@ namespace Elight.Infrastructure
             var url = "http://ip.taobao.com/service/getIpInfo.php?ip=" + ip;
             try
             {
-                using (var client = new WebClient())
+                using (var client = new WebClient() { Encoding = Encoding.UTF8 })
                 {
                     return client.DownloadString(url).ToObject<TaoBaoIpEnitiy>().GetAddress();
                 }
