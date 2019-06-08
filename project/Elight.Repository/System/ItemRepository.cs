@@ -25,7 +25,7 @@ namespace Elight.Repository
             return ToPage(condition, pageIndex, pageSize, "SortCode");
         }
 
-        public long GetChildCount(object parentId)
+        public long GetChildCount(string parentId)
         {
             return Count(t => t.ParentId == parentId.ToString());
         }

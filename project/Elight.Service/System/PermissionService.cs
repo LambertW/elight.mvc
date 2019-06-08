@@ -106,7 +106,7 @@ namespace Elight.Service
             return _permissionRepository.Delete(primaryKeys);
         }
 
-        public long GetChildCount(object parentId)
+        public long GetChildCount(string parentId)
         {
             return _permissionRepository.GetChildCount(parentId);
         }

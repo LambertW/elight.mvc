@@ -53,7 +53,7 @@ namespace Elight.Service
             return _organizeRepository.Update(model, updateColumns);
         }
 
-        public long GetChildCount(object parentId)
+        public long GetChildCount(string parentId)
         {
             return _organizeRepository.GetChildCount(parentId);
         }

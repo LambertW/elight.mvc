@@ -30,7 +30,7 @@ namespace Elight.Service
             return _itemRepository.GetList(pageIndex, pageSize, keyWord);
         }
 
-        public long GetChildCount(object parentId)
+        public long GetChildCount(string parentId)
         {
             return _itemRepository.GetChildCount(parentId);
         }

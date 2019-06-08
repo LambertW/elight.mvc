@@ -14,7 +14,7 @@ namespace Elight.IService
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        List<Sys_RoleAuthorize> GetList(object roleId);
+        List<Sys_RoleAuthorize> GetList(string roleId);
 
         /// <summary>
         /// 角色授权。

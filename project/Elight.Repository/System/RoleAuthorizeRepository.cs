@@ -10,10 +10,10 @@ namespace Elight.Repository
 {
     public partial class RoleAuthorizeRepository : BaseRepository<Sys_RoleAuthorize, string>, IRoleAuthorizeRepository
     {
-        public List<Sys_RoleAuthorize> GetList(object roleId)
+        public List<Sys_RoleAuthorize> GetList(string roleId)
         {
             var condition = Repository
-                .Where(t => t.RoleId == roleId.ToString());
+                .Where(t => t.RoleId == roleId);
 
             return condition.ToList();
         }

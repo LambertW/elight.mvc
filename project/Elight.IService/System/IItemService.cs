@@ -30,6 +30,6 @@ namespace Elight.IService
         /// </summary>
         /// <param name="parentId">父级字典ID</param>
         /// <returns></returns>
-        long GetChildCount(object parentId);
+        long GetChildCount(string parentId);
     }
 }

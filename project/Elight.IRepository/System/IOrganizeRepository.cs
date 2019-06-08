@@ -30,6 +30,6 @@ namespace Elight.IRepository
         /// </summary>
         /// <param name="parentId">父级机构ID</param>
         /// <returns></returns>
-        long GetChildCount(object parentId);
+        long GetChildCount(string parentId);
     }
 }

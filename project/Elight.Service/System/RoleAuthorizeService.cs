@@ -20,7 +20,7 @@ namespace Elight.Service
             this._roleAuthorizeRepository = roleAuthorizeRepository;
         }
 
-        public List<Sys_RoleAuthorize> GetList(object roleId)
+        public List<Sys_RoleAuthorize> GetList(string roleId)
         {
             return _roleAuthorizeRepository.GetList(roleId);
         }

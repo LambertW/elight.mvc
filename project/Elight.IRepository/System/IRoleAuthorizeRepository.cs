@@ -20,7 +20,7 @@ namespace Elight.IRepository
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        List<Sys_RoleAuthorize> GetList(object roleId);
+        List<Sys_RoleAuthorize> GetList(string roleId);
 
         /// <summary>
         /// 根据权限ID删除角色授权信息。

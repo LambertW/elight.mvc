@@ -34,9 +34,9 @@ namespace Elight.Repository
             return Delete(t => primaryKeys.Contains(t.Id));
         }
 
-        public long GetChildCount(object parentId)
+        public long GetChildCount(string parentId)
         {
-            return Count(t => t.ParentId == parentId.ToString());
+            return Count(t => t.ParentId == parentId);
         }
     }
 }
