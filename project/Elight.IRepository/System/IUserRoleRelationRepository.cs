@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IRepository
 {
-    public partial interface IUserRoleRelationRepository : IBaseRepository<Sys_UserRoleRelation>
+    public partial interface IUserRoleRelationRepository : IBaseRepository<Sys_UserRoleRelation, string>
     {
         /// <summary>
         /// 获取指定用户ID所有用户角色关系实体。

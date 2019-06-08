@@ -1,4 +1,5 @@
 ﻿using Elight.Entity;
+using Elight.Entity.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Elight.IRepository
 {
-    public partial interface IPermissionRepository : IBaseRepository<Sys_Permission>
+    public partial interface IPermissionRepository : IBaseRepository<Sys_Permission, string>
     {
         /// <summary>
         /// 获取所有权限列表。
         /// </summary>
         /// <returns></returns>
-        List<Sys_Permission> GetList();
+        //List<Sys_Permission> GetList();
 
         /// <summary>
         /// 分页获取权限列表。

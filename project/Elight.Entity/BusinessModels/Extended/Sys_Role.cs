@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FreeSql.DataAnnotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Elight.Entity
         /// <summary>
         /// 保存角色部门名称。
         /// </summary>
+        [Column(IsIgnore = true)]
         public string DeptName { get; set; }
     }
 }

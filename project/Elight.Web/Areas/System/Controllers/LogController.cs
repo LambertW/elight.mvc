@@ -27,7 +27,7 @@ namespace Elight.Web.Areas.System.Controllers
         }
 
         [HttpPost, AuthorizeChecked]
-        public ActionResult Index(long pageIndex, long pageSize, string queryDate, string keyWord)
+        public ActionResult Index(int pageIndex, int pageSize, string queryDate, string keyWord)
         {
             DateTime limitDate = DateTime.Now.StartDateTime();
 

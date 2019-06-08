@@ -11,7 +11,7 @@ using Elight.IRepository;
 
 namespace Elight.Service
 {
-    public partial class RoleAuthorizeService : BaseService<Sys_RoleAuthorize>, IRoleAuthorizeService
+    public partial class RoleAuthorizeService : BaseService<Sys_RoleAuthorize, string>, IRoleAuthorizeService
     {
         private readonly IRoleAuthorizeRepository _roleAuthorizeRepository;
 

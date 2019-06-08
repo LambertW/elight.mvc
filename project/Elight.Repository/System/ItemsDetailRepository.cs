@@ -4,27 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Elight.Entity;
+using Elight.Entity.ResponseModels;
 using Elight.IRepository;
 
 namespace Elight.Repository
 {
-    public partial class ItemsDetailRepository : BaseRepository<Sys_ItemsDetail>, IItemsDetailRepository
+    public partial class ItemsDetailRepository : BaseRepository<Sys_ItemsDetail, string>, IItemsDetailRepository
     {
-        public Page<Sys_ItemsDetail> GetList(long pageIndex, long pageSize, string itemId, string keyWord)
+        public Page<Sys_ItemsDetail> GetList(int pageIndex, int pageSize, string itemId, string keyWord)
         {
-            Sql sql = Sql.Builder.Where("DeleteMark=0 and ItemId=@0", itemId);
-            if (!string.IsNullOrEmpty(keyWord))
-            {
-                sql.Where("Name like @0 or EnCode like @1", '%' + keyWord + '%', '%' + keyWord + '%');
-            }
-            sql.OrderBy("SortCode");
-            return Db.Page<Sys_ItemsDetail>(pageIndex, pageSize, sql);
+            var condition = Repository
+                .Where(t => t.DeleteMark == false)
+                .Where(t => t.ItemId == itemId)
+                .WhereIf(!string.IsNullOrEmpty(keyWord), t => t.Name.Contains(keyWord) || t.EnCode.Contains(keyWord));
+
+            return ToPage(condition, pageIndex, pageSize, "SortCode");
         }
 
         public int Delete(string itemId)
         {
-            Sql sql = Sql.Builder.Where("ItemId=@0", itemId);
-            return Db.Delete<Sys_ItemsDetail>(sql);
+            return Delete(t => t.ItemId == itemId);
         }
     }
 }

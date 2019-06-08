@@ -45,5 +45,10 @@ namespace Elight.Infrastructure
             }
             doc.Save(HttpContext.Current.Server.MapPath(CONGIG_PATH));
         }
+
+        public static string GetConnectionString(string key)
+        {
+            return ConfigurationManager.ConnectionStrings[key].ToString().Trim();
+        }
     }
 }

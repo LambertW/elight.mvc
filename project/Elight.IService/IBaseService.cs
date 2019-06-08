@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Elight.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Elight.IService
     /// 业务逻辑层父接口。
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public partial interface IBaseService<TEntity> where TEntity : class
+    public partial interface IBaseService<TEntity, TPrimaryKey> where TEntity : class, IEntity<TPrimaryKey>
     {
         /// <summary>
         /// 记录是否存在。

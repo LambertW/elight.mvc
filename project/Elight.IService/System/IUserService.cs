@@ -1,4 +1,5 @@
 ﻿using Elight.Entity;
+using Elight.Entity.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IService
 {
-    public partial interface IUserService : IBaseService<Sys_User>
+    public partial interface IUserService : IBaseService<Sys_User, string>
     {
         /// <summary>
         /// 根据账号查询用户。

@@ -1,4 +1,5 @@
 ﻿using Elight.Entity;
+using Elight.Entity.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Elight.IRepository
 {
-    public partial interface IItemRepository : IBaseRepository<Sys_Item>
+    public partial interface IItemRepository : IBaseRepository<Sys_Item, string>
     {
         /// <summary>
         /// 获取所有字典列表。
         /// </summary>
         /// <returns></returns>
-        List<Sys_Item> GetList();
+        //List<Sys_Item> GetList();
 
         /// <summary>
         /// 分页获取字典列表。
@@ -22,7 +23,7 @@ namespace Elight.IRepository
         /// <param name="pageSize">页容量</param>
         /// <param name="keyWord">字典编码或名称</param>
         /// <returns></returns>
-        Page<Sys_Item> GetList(long pageIndex, long pageSize, string keyWord);
+        Page<Sys_Item> GetList(int pageIndex, int pageSize, string keyWord);
 
         /// <summary>
         /// 获取子级字典数量。

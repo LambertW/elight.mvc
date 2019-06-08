@@ -1,4 +1,5 @@
 ﻿using Elight.Entity;
+using Elight.Entity.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IService
 {
-    public partial interface IOrganizeService : IBaseService<Sys_Organize>
+    public partial interface IOrganizeService : IBaseService<Sys_Organize, string>
     {
         /// <summary>
         /// 获取所有组织列表。
@@ -22,7 +23,7 @@ namespace Elight.IService
         /// <param name="pageSize">页容量</param>
         /// <param name="keyWord">编码或名称</param>
         /// <returns></returns>
-        Page<Sys_Organize> GetList(long pageIndex, long pageSize, string keyWord);
+        Page<Sys_Organize> GetList(int pageIndex, int pageSize, string keyWord);
 
         /// <summary>
         /// 获取子级机构数量。

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Elight.Entity;
+using Elight.Entity.ResponseModels;
 
 namespace Elight.IRepository
 {
-    public partial interface IUserRepository : IBaseRepository<Sys_User>
+    public partial interface IUserRepository : IBaseRepository<Sys_User, string>
     {
 
         /// <summary>

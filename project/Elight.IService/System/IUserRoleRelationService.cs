@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IService
 {
-    public partial interface IUserRoleRelationService : IBaseService<Sys_UserRoleRelation>
+    public partial interface IUserRoleRelationService : IBaseService<Sys_UserRoleRelation, string>
     {
         /// <summary>
         /// 根据用户ID获取角色集合。

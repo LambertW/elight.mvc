@@ -4,41 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Elight.Entity;
+using Elight.Entity.ResponseModels;
 using Elight.IRepository;
 
 namespace Elight.Repository
 {
-    public partial class PermissionRepository : BaseRepository<Sys_Permission>, IPermissionRepository
+    public partial class PermissionRepository : BaseRepository<Sys_Permission, string>, IPermissionRepository
     {
-        public List<Sys_Permission> GetList()
+        public override List<Sys_Permission> GetList()
         {
-            Sql sql = Sql.Builder.Where("DeleteMark=@0", 0).OrderBy("SortCode");
-            return Db.Fetch<Sys_Permission>(sql);
-        }
-        public Page<Sys_Permission> GetList(int pageIndex, int pageSize, string keyWord)
-        {
-            Sql sql = Sql.Builder
-                .Where("DeleteMark=@0 and Name like @1 or EnCode like @2", 0, '%' + keyWord + '%', '%' + keyWord + '%')
-                .OrderBy("SortCode");
-            return Db.Page<Sys_Permission>(pageIndex, pageSize, sql);
+            var condition = Repository
+                .Where(t => t.DeleteMark == false)
+                .OrderBy(t => t.SortCode);
+
+            return condition.ToList();
         }
 
+        public Page<Sys_Permission> GetList(int pageIndex, int pageSize, string keyWord)
+        {
+            var condition = Repository
+                .Where(t => t.DeleteMark == false)
+                .WhereIf(!string.IsNullOrEmpty(keyWord), t => t.Name.Contains(keyWord) || t.EnCode.Contains(keyWord));
+
+            return ToPage(condition, pageIndex, pageSize, "SortCode");
+        }
 
         public int Delete(params string[] primaryKeys)
         {
-            Sql sql = Sql.Builder.Append(" WHERE");
-            for (int i = 0; i < primaryKeys.Length - 1; i++)
-            {
-                sql.Append(" Id=@0 OR", primaryKeys[i]);
-            }
-            sql.Append(" Id=@0", primaryKeys[primaryKeys.Length - 1]);
-            return Db.Delete<Sys_Permission>(sql);
+            return Delete(t => primaryKeys.Contains(t.Id));
         }
 
         public long GetChildCount(object parentId)
         {
-            Sql sql = Sql.Builder.Select("COUNT(*)").From("Sys_Permission").Where("ParentId=@0", parentId);
-            return Db.ExecuteScalar<long>(sql);
+            return Count(t => t.ParentId == parentId.ToString());
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IService
 {
-    public partial interface IRoleAuthorizeService : IBaseService<Sys_RoleAuthorize>
+    public partial interface IRoleAuthorizeService : IBaseService<Sys_RoleAuthorize, string>
     {
         /// <summary>
         /// 根据角色ID查询授权信息。

@@ -4,33 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Elight.Entity;
+using Elight.Entity.ResponseModels;
 using Elight.IRepository;
 
 namespace Elight.Repository
 {
-    public partial class ItemRepository : BaseRepository<Sys_Item>, IItemRepository
+    public partial class ItemRepository : BaseRepository<Sys_Item, string>, IItemRepository
     {
-        public List<Sys_Item> GetList()
+        public override List<Sys_Item> GetList()
         {
-            Sql sql = Sql.Builder.Where("DeleteMark=@0", 0);
-            return Db.Fetch<Sys_Item>(sql);
+            return Repository.Where(t => t.DeleteMark == false).OrderBy(t => t.SortCode).ToList();
         }
 
-        public Page<Sys_Item> GetList(long pageIndex, long pageSize, string keyWord)
+        public Page<Sys_Item> GetList(int pageIndex, int pageSize, string keyWord)
         {
-            Sql sql = Sql.Builder.Where("DeleteMark=@0", 0);
-            if (!string.IsNullOrEmpty(keyWord))
-            {
-                sql.Where("Name like @0 or EnCode like @1", '%' + keyWord + '%', '%' + keyWord + '%');
-            }
-            sql.OrderBy("SortCode");
-            return Db.Page<Sys_Item>(pageIndex, pageSize, sql);
+            var condition = Repository
+                .Where(t => t.DeleteMark == false)
+                .WhereIf(!string.IsNullOrEmpty(keyWord), t => t.Name.Contains(keyWord) || t.EnCode.Contains(keyWord));
+
+            return ToPage(condition, pageIndex, pageSize, "SortCode");
         }
 
         public long GetChildCount(object parentId)
         {
-            Sql sql = Sql.Builder.Select("COUNT(*)").From("Sys_Item").Where("ParentId=@0", parentId);
-            return Db.ExecuteScalar<long>(sql);
+            return Count(t => t.ParentId == parentId.ToString());
         }
     }
 }

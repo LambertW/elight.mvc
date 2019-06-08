@@ -7,10 +7,11 @@ using Elight.Infrastructure;
 using Elight.Entity;
 using Elight.IService;
 using Elight.IRepository;
+using Elight.Entity.ResponseModels;
 
 namespace Elight.Service
 {
-    public partial class PermissionService : BaseService<Sys_Permission>, IPermissionService
+    public partial class PermissionService : BaseService<Sys_Permission, string>, IPermissionService
     {
         private readonly IPermissionRepository _permissionRepository;
         private readonly IRoleAuthorizeRepository _roleAuthorizeRepository;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IService
 {
-    public partial interface IUserLogOnService : IBaseService<Sys_UserLogOn>
+    public partial interface IUserLogOnService : IBaseService<Sys_UserLogOn, string>
     {
         /// <summary>
         /// 根据用户ID查询用户登陆信息。

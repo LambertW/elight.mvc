@@ -1,4 +1,5 @@
 ﻿using Elight.Entity;
+using Elight.Entity.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IService
 {
-    public partial interface IRoleService : IBaseService<Sys_Role>
+    public partial interface IRoleService : IBaseService<Sys_Role, string>
     {
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace Elight.IService
         /// <param name="pageSize">页容量</param>
         /// <param name="keyWord">角色编码或名称</param>
         /// <returns></returns>
-        Page<Sys_Role> GetList(long pageIndex, long pageSize, string keyWord);
+        Page<Sys_Role> GetList(int pageIndex, int pageSize, string keyWord);
 
         /// <summary>
         /// 批量删除角色。

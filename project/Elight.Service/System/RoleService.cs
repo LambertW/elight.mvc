@@ -7,10 +7,11 @@ using Elight.Infrastructure;
 using Elight.Entity;
 using Elight.IService;
 using Elight.IRepository;
+using Elight.Entity.ResponseModels;
 
 namespace Elight.Service
 {
-    public partial class RoleService : BaseService<Sys_Role>, IRoleService
+    public partial class RoleService : BaseService<Sys_Role, string>, IRoleService
     {
         private readonly IRoleRepository _roleRepository;
 
@@ -19,7 +20,7 @@ namespace Elight.Service
             this._roleRepository = roleRepository;
         }
 
-        public Page<Sys_Role> GetList(long pageIndex, long pageSize, string keyWord)
+        public Page<Sys_Role> GetList(int pageIndex, int pageSize, string keyWord)
         {
             return _roleRepository.GetList(pageIndex, pageSize, keyWord);
         }

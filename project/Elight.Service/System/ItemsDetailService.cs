@@ -7,10 +7,11 @@ using Elight.Infrastructure;
 using Elight.Entity;
 using Elight.IService;
 using Elight.IRepository;
+using Elight.Entity.ResponseModels;
 
 namespace Elight.Service
 {
-    public partial class ItemsDetailService : BaseService<Sys_ItemsDetail>, IItemsDetailService
+    public partial class ItemsDetailService : BaseService<Sys_ItemsDetail, string>, IItemsDetailService
     {
         private readonly IItemsDetailRepository _itemsDetailRepository;
 
@@ -19,7 +20,7 @@ namespace Elight.Service
             this._itemsDetailRepository = itemsDetailRepository;
         }
 
-        public Page<Sys_ItemsDetail> GetList(long pageIndex, long pageSize, string itemId, string keyWord)
+        public Page<Sys_ItemsDetail> GetList(int pageIndex, int pageSize, string itemId, string keyWord)
         {
             return _itemsDetailRepository.GetList(pageIndex, pageSize, itemId, keyWord);
         }

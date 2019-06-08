@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IRepository
 {
-    public partial interface IUserLogOnRepository : IBaseRepository<Sys_UserLogOn>
+    public partial interface IUserLogOnRepository : IBaseRepository<Sys_UserLogOn, string>
     {
         /// <summary>
         /// 根据用户ID获取用户登陆实体。

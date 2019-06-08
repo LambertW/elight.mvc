@@ -1,4 +1,5 @@
 ﻿using Elight.Entity;
+using Elight.Entity.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IRepository
 {
-    public partial interface ILogRepository : IBaseRepository<Sys_Log>
+    public partial interface ILogRepository : IBaseRepository<Sys_Log, string>
     {
         /// <summary>
         /// 分页获取指定用户操作记录。
@@ -17,7 +18,7 @@ namespace Elight.IRepository
         /// <param name="limitDate">限制日期</param>
         /// <param name="keyWord">搜索关键字</param>
         /// <returns></returns>
-        Page<Sys_Log> GetList(long pageIndex, long pageSize, DateTime limitDate, string keyWord);
+        Page<Sys_Log> GetList(int pageIndex, int pageSize, DateTime limitDate, string keyWord);
 
         /// <summary>
         /// 根据时间删除日志。

@@ -5,25 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using Elight.IRepository;
 using Elight.Entity;
+using Elight.Entity.ResponseModels;
 
 namespace Elight.Repository
 {
-    public partial class LogRepository : BaseRepository<Sys_Log>, ILogRepository
+    public partial class LogRepository : BaseRepository<Sys_Log, string>, ILogRepository
     {
-
-        public Page<Sys_Log> GetList(long pageIndex, long pageSize, DateTime limitDate, string keyWord)
+        public Page<Sys_Log> GetList(int pageIndex, int pageSize, DateTime limitDate, string keyWord)
         {
-            Sql sql = Sql.Builder
-                .Where("CreateTime > @0", limitDate.ToString())
-                .Where("Account like @0 or RealName like @1", '%' + keyWord + '%', '%' + keyWord + '%')
-                .OrderBy("CreateTime desc");
-            return Db.Page<Sys_Log>(pageIndex, pageSize, sql);
+            var condition = Repository
+                .Where(t => t.CreateTime > limitDate)
+                .Where(t => t.Account.Contains(keyWord) || t.RealName.Contains(keyWord));
+
+            return ToPage(condition, pageIndex, pageSize, "CreateTime");
         }
 
         public int Delete(DateTime keepDate)
         {
-            Sql sql = Sql.Builder.Where("CreateTime <= @0", keepDate.ToString());
-            return Db.Delete<Sys_Log>(sql);
+            return Delete(t => t.CreateTime <= keepDate);
         }
     }
 }

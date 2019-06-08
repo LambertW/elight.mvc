@@ -7,10 +7,11 @@ using Elight.Entity;
 using Elight.Infrastructure;
 using Elight.IService;
 using Elight.IRepository;
+using Elight.Entity.ResponseModels;
 
 namespace Elight.Service
 {
-    public partial class UserService : BaseService<Sys_User>, IUserService
+    public partial class UserService : BaseService<Sys_User, string>, IUserService
     {
         private readonly IUserRepository _userRepository;
 

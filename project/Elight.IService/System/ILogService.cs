@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Elight.Entity;
+using Elight.Entity.ResponseModels;
 
 namespace Elight.IService
 {
-    public partial interface ILogService : IBaseService<Sys_Log>
+    public partial interface ILogService : IBaseService<Sys_Log, string>
     {
 
         /// <summary>
@@ -18,7 +19,7 @@ namespace Elight.IService
         /// <param name="limitDate">限制日期</param>
         /// <param name="keyWord">搜索关键字</param>
         /// <returns></returns>
-        Page<Sys_Log> GetList(long pageIndex, long pageSize, DateTime limitDate, string keyWord);
+        Page<Sys_Log> GetList(int pageIndex, int pageSize, DateTime limitDate, string keyWord);
 
         /// <summary>
         /// 根据时间删除日志。

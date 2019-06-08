@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Elight.IRepository
 {
-    public partial interface IRoleAuthorizeRepository : IBaseRepository<Sys_RoleAuthorize>
+    public partial interface IRoleAuthorizeRepository : IBaseRepository<Sys_RoleAuthorize, string>
     {
         /// <summary>
         /// 获取所有角色授权信息。
         /// </summary>
         /// <returns></returns>
-        List<Sys_RoleAuthorize> GetList();
+        //List<Sys_RoleAuthorize> GetList();
 
         /// <summary>
         /// 根据角色ID查询授权信息。

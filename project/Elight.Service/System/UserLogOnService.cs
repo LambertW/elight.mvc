@@ -10,7 +10,7 @@ using Elight.IRepository;
 
 namespace Elight.Service
 {
-    public partial class UserLogOnService : BaseService<Sys_UserLogOn>, IUserLogOnService
+    public partial class UserLogOnService : BaseService<Sys_UserLogOn, string>, IUserLogOnService
     {
         private readonly IUserLogOnRepository _userLogOnRepository;
 

@@ -10,7 +10,7 @@ using Elight.IRepository;
 
 namespace Elight.Service
 {
-    public partial class UserRoleRelationService : BaseService<Sys_UserRoleRelation>, IUserRoleRelationService
+    public partial class UserRoleRelationService : BaseService<Sys_UserRoleRelation, string>, IUserRoleRelationService
     {
         private readonly IUserRoleRelationRepository _userRoleRelationRepository;
 

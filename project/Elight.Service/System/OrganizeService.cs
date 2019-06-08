@@ -7,10 +7,11 @@ using Elight.Infrastructure;
 using Elight.Entity;
 using Elight.IService;
 using Elight.IRepository;
+using Elight.Entity.ResponseModels;
 
 namespace Elight.Service
 {
-    public partial class OrganizeService : BaseService<Sys_Organize>, IOrganizeService
+    public partial class OrganizeService : BaseService<Sys_Organize, string>, IOrganizeService
     {
         private readonly IOrganizeRepository _organizeRepository;
 
@@ -24,7 +25,7 @@ namespace Elight.Service
             return _organizeRepository.GetList();
         }
 
-        public Page<Sys_Organize> GetList(long pageIndex, long pageSize, string keyWord)
+        public Page<Sys_Organize> GetList(int pageIndex, int pageSize, string keyWord)
         {
             return _organizeRepository.GetList(pageIndex, pageSize, keyWord);
         }

@@ -4,46 +4,52 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Elight.Entity;
+using Elight.Entity.ResponseModels;
 using Elight.IRepository;
 
 namespace Elight.Repository
 {
-    public partial class RoleRepository : BaseRepository<Sys_Role>, IRoleRepository
+    public partial class RoleRepository : BaseRepository<Sys_Role, string>, IRoleRepository
     {
-        public Page<Sys_Role> GetList(long pageIndex, long pageSize, string keyWord)
+        public Page<Sys_Role> GetList(int pageIndex, int pageSize, string keyWord)
         {
-            Sql sql = Sql.Builder
-               .Select("r.*, o.FullName")
-               .From("Sys_Role r")
-               .LeftJoin("Sys_Organize o")
-               .On("r.OrganizeId=o.Id")
-               .Where("r.DeleteMark=0 and r.Name like @0 or r.EnCode like @1", '%' + keyWord + '%', '%' + keyWord + '%')
-               .OrderBy("r.SortCode");
+            var condition = FreeSql.Select<Sys_Role>()
+                .Where(t => t.DeleteMark == false)
+                .WhereIf(!string.IsNullOrEmpty(keyWord), t => t.Name.Contains(keyWord) || t.EnCode.Contains(keyWord))
+                .From<Sys_Organize>((r, o) => r.LeftJoin(a => a.OrganizeId == o.Id))
+                .LeftJoin<Sys_Organize>((r, o) => r.OrganizeId == o.Id);
+            var total = condition.Count();
+            var items = condition.OrderBy((a, b) => a.SortCode)
+                .ToList((a, b) => new Sys_Role
+                {
+                    AllowEdit = a.AllowEdit,
+                    CreateTime = a.CreateTime,
+                    CreateUser = a.CreateUser,
+                    DeleteMark = a.DeleteMark,
+                    EnCode = a.EnCode,
+                    Id = a.Id,
+                    IsEnabled = a.IsEnabled,
+                    ModifyTime = a.ModifyTime,
+                    ModifyUser = a.ModifyUser,
+                    Name = a.Name,
+                    OrganizeId = a.OrganizeId,
+                    Remark = a.Remark,
+                    SortCode = a.SortCode,
+                    Type = a.Type,
+                    DeptName = b.FullName
+                });
 
-            var list = Db.PageJoin<Sys_Role, Sys_Organize, Sys_Role>((role, dept) =>
-            {
-                role.DeptName = dept.FullName;
-                return role;
-            }, pageIndex, pageSize, sql);
-
-            return list;
+            return new Page<Sys_Role> { Items = items, TotalItems = total };
         }
 
         public int Delete(params string[] primaryKeys)
         {
-            Sql sql = Sql.Builder.Append(" WHERE");
-            for (int i = 0; i < primaryKeys.Length - 1; i++)
-            {
-                sql.Append(" Id=@0 OR", primaryKeys[i]);
-            }
-            sql.Append(" Id=@0", primaryKeys[primaryKeys.Length - 1]);
-            return Db.Delete<Sys_Role>(sql);
+            return Delete(t => primaryKeys.Contains(t.Id));
         }
 
-        public List<Sys_Role> GetList()
+        public override List<Sys_Role> GetList()
         {
-            Sql sql = Sql.Builder.Where("DeleteMark=@0", 0).OrderBy("SortCode");
-            return Db.Fetch<Sys_Role>(sql);
+            return Repository.Where(t => t.DeleteMark == false).OrderBy(t => t.SortCode).ToList();
         }
     }
 }

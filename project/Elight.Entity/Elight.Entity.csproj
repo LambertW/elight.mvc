@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Elight.Entity</RootNamespace>
     <AssemblyName>Elight.Entity</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,12 +31,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FreeSql, Version=0.6.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSql.0.6.9\lib\net45\FreeSql.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SafeObjectPool, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SafeObjectPool.2.0.2\lib\net45\SafeObjectPool.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,28 +55,28 @@
   <ItemGroup>
     <Compile Include="BusinessModels\Extended\Sys_Role.cs" />
     <Compile Include="BusinessModels\Extended\Sys_User.cs" />
-    <Compile Include="BusinessModels\Generated\Database1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Database.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BusinessModels\PetaPoco.cs" />
-    <Compile Include="BusinessModels\PetaPocoExtension.cs" />
+    <Compile Include="BusinessModels\Generated\Sys_Item.cs" />
+    <Compile Include="BusinessModels\Generated\Sys_ItemsDetail.cs" />
+    <Compile Include="BusinessModels\Generated\Sys_Item_Demo.cs" />
+    <Compile Include="BusinessModels\Generated\Sys_Log.cs" />
+    <Compile Include="BusinessModels\Generated\Sys_Organize.cs" />
+    <Compile Include="BusinessModels\Generated\Sys_Permission.cs" />
+    <Compile Include="BusinessModels\Generated\Sys_Role.cs" />
+    <Compile Include="BusinessModels\Generated\Sys_RoleAuthorize.cs" />
+    <Compile Include="BusinessModels\Generated\Sys_User.cs" />
+    <Compile Include="BusinessModels\Generated\Sys_UserLogOn.cs" />
+    <Compile Include="BusinessModels\Generated\Sys_UserRoleRelation.cs" />
+    <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResponseModels\AjaxResult.cs" />
     <Compile Include="ResponseModels\LayNavbar.cs" />
     <Compile Include="ResponseModels\LayPadding.cs" />
+    <Compile Include="ResponseModels\Page.cs" />
     <Compile Include="ResponseModels\TreeSelect.cs" />
     <Compile Include="ResponseModels\ZTreeNode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="BusinessModels\Generated\Database.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Database1.cs</LastGenOutput>
-    </None>
-    <None Include="BusinessModels\Generated\PetaPoco.Core.ttinclude" />
-    <None Include="BusinessModels\Generated\PetaPoco.Generator.ttinclude" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

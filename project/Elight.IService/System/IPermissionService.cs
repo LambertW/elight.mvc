@@ -1,4 +1,5 @@
 ﻿using Elight.Entity;
+using Elight.Entity.ResponseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IService
 {
-    public partial interface IPermissionService : IBaseService<Sys_Permission>
+    public partial interface IPermissionService : IBaseService<Sys_Permission, string>
     {
         /// <summary>
         /// 获取所有权限列表。

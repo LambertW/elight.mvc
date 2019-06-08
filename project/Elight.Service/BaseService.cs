@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Elight.Entity;
 using Elight.IRepository;
 using Elight.IService;
 using Elight.Repository;
@@ -12,15 +13,15 @@ namespace Elight.Service
     /// <summary>
     /// 业务逻辑层父类。
     /// </summary>
-    public partial class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class
+    public partial class BaseService<TEntity, TPrimaryKey> : IBaseService<TEntity, TPrimaryKey> where TEntity : class, IEntity<TPrimaryKey>
     {
-        private IBaseRepository<TEntity> _baseDal;
+        private IBaseRepository<TEntity, TPrimaryKey> _baseDal;
 
         public BaseService()
         {
             if (_baseDal == null)
             {
-                _baseDal = new BaseRepository<TEntity>();
+                _baseDal = new BaseRepository<TEntity, TPrimaryKey>();
             }
         }
 

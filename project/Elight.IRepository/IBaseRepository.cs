@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Elight.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +12,7 @@ namespace Elight.IRepository
     /// 数据访问层父接口。
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
-    public partial interface IBaseRepository<TEntity> where TEntity : class
+    public partial interface IBaseRepository<TEntity, TPrimaryKey> where TEntity : class, IEntity<TPrimaryKey>
     {
         /// <summary>
         /// 记录是否存在。
@@ -42,6 +44,7 @@ namespace Elight.IRepository
         /// <param name="model">删除对象</param>
         /// <returns></returns>
         int Delete(TEntity model);
+        int Delete(Expression<Func<TEntity, bool>> expression);
         /// <summary>
         /// 更新一条记录。
         /// </summary>
@@ -55,5 +58,7 @@ namespace Elight.IRepository
         /// <param name="columns">修改指定属性（列）</param>
         /// <returns></returns>
         int Update(TEntity model, IEnumerable<string> columns);
+        List<TEntity> GetList();
+        long Count(Expression<Func<TEntity, bool>> expression);
     }
 }
