@@ -24,7 +24,7 @@ namespace Elight.Web.Areas.System.Controllers
         [HttpPost,ValidateAntiForgeryToken]
         public ActionResult Form(Sys_UserLogOn model)
         {
-            if (model.Id.IsNullOrEmpty())
+            if (model.Id == null)
             {
                 var primaryKey = _userLogOnService.Insert(model);
                 return primaryKey != null ? Success() : Error();

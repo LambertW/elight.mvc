@@ -32,7 +32,7 @@ namespace Elight.Web.Filters
             };
             var userId = OperatorProvider.Instance.Current.UserId;
             var action = HttpContext.Current.Request.ServerVariables["SCRIPT_NAME"].ToString();
-            bool hasPermission = AutoFacConfig.Resolve<IPermissionService>().ActionValidate(userId, action);
+            bool hasPermission = AutoFacConfig.Resolve<IPermissionService>().ActionValidate(Guid.Parse(userId), action);
             if (!hasPermission)
             {
                 StringBuilder script = new StringBuilder();

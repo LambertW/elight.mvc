@@ -55,16 +55,16 @@ namespace Elight.Web.Areas.System.Controllers
         [HttpPost, AuthorizeChecked, ValidateAntiForgeryToken]
         public ActionResult Form(Sys_User model, string password, string roleIds)
         {
-            if (model.Id.IsNullOrEmpty())
+            if (model.Id == null)
             {
                 //新增用户基本信息。
-                var userId = _userService.Insert(model).ToString();
+                var userId = _userService.Insert(model);
                 //新增用户角色信息。
-                _userRoleRelationService.SetRole(userId, roleIds.ToStrArray());
+                _userRoleRelationService.SetRole(Guid.Parse(userId.ToString()), roleIds.ToStrArray().Select(t => Guid.Parse(t)).ToArray());
                 //新增用户登陆信息。
                 Sys_UserLogOn userLogOnEntity = new Sys_UserLogOn()
                   {
-                      UserId = userId,
+                      UserId = Guid.Parse(userId.ToString()),
                       Password = password
                   };
                 var userLoginId = _userLogOnService.Insert(userLogOnEntity);
@@ -75,7 +75,7 @@ namespace Elight.Web.Areas.System.Controllers
                 //更新用户基本信息。
                 int row = _userService.Update(model);
                 //更新用户角色信息。
-                _userRoleRelationService.SetRole(model.Id, roleIds.ToStrArray());
+                _userRoleRelationService.SetRole(model.Id, roleIds.ToStrArray().Select(t => Guid.Parse(t)).ToArray());
                 return row > 0 ? Success() : Error();
             }
         }
@@ -87,11 +87,11 @@ namespace Elight.Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetForm(string primaryKey)
+        public ActionResult GetForm(Guid primaryKey)
         {
             var entity = _userService.Get(primaryKey);
 
-            entity.RoleId = _userRoleRelationService.GetList(entity.Id).Select(c => c.RoleId).ToList();
+            entity.RoleId = _userRoleRelationService.GetList(entity.Id).Select(c => c.RoleId.Value.ToString()).ToList();
 
             return Content(entity.ToJson());
         }
@@ -100,9 +100,9 @@ namespace Elight.Web.Areas.System.Controllers
         public ActionResult Delete(string userIds)
         {
             //多用户删除。
-            int row = _userService.Delete(userIds.ToStrArray());
-            _userRoleRelationService.Delete(userIds.ToStrArray());
-            _userLogOnService.Delete(userIds.ToStrArray());
+            int row = _userService.Delete(userIds.ToStrArray().Select(t => Guid.Parse(t)).ToArray());
+            _userRoleRelationService.Delete(userIds.ToStrArray().Select(t => Guid.Parse(t)).ToArray());
+            _userLogOnService.Delete(userIds.ToStrArray().Select(t => Guid.Parse(t)).ToArray());
             return row > 0 ? Success() : Error();
         }
 

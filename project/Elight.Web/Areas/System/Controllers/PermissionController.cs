@@ -51,7 +51,7 @@ namespace Elight.Web.Areas.System.Controllers
         [HttpPost, AuthorizeChecked, ValidateAntiForgeryToken]
         public ActionResult Form(Sys_Permission model)
         {
-            if (model.Id.IsNullOrEmpty())
+            if (model.Id==null)
             {
                 var primaryKey = _permissionService.Insert(model);
                 return primaryKey != null ? Success() : Error();
@@ -72,17 +72,17 @@ namespace Elight.Web.Areas.System.Controllers
         [HttpPost, AuthorizeChecked]
         public ActionResult Delete(string primaryKey)
         {
-            long count = _permissionService.GetChildCount(primaryKey);
+            long count = _permissionService.GetChildCount(Guid.Parse(primaryKey));
             if (count == 0)
             {
-                int row = _permissionService.Delete(primaryKey.ToStrArray());
+                int row = _permissionService.Delete(primaryKey.ToStrArray().Select(t => Guid.Parse(t)).ToArray());
                 return row > 0 ? Success() : Error();
             }
             return Error(string.Format("操作失败，请先删除该项的{0}个子级权限。", count));
         }
 
         [HttpPost]
-        public ActionResult GetForm(string primaryKey)
+        public ActionResult GetForm(Guid primaryKey)
         {
             var entity = _permissionService.Get(primaryKey);
             return Content(entity.ToJson());
@@ -96,9 +96,9 @@ namespace Elight.Web.Areas.System.Controllers
             foreach (Sys_Permission item in data)
             {
                 TreeSelect model = new TreeSelect();
-                model.id = item.Id;
+                model.id = item.Id.ToString();
                 model.text = item.Name;
-                model.parentId = item.ParentId;
+                model.parentId = ConvertZTreeGuid(item.ParentId);
                 treeList.Add(model);
             }
             return Content(treeList.ToTreeSelectJson());

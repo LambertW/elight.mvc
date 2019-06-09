@@ -52,7 +52,7 @@ namespace Elight.Web.Areas.System.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult Form(Sys_Item model)
         {
-            if (model.Id.IsNullOrEmpty())
+            if (model.Id == null)
             {
                 var primaryKey = _itemService.Insert(model);
                 return primaryKey != null ? Success() : Error();
@@ -65,14 +65,14 @@ namespace Elight.Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetForm(string primaryKey)
+        public ActionResult GetForm(Guid primaryKey)
         {
             var entity = _itemService.Get(primaryKey);
             return Content(entity.ToJson());
         }
 
         [HttpPost]
-        public ActionResult Delete(string primaryKey)
+        public ActionResult Delete(Guid primaryKey)
         {
             long count = _itemService.GetChildCount(primaryKey);
             if (count == 0)
@@ -100,8 +100,8 @@ namespace Elight.Web.Areas.System.Controllers
             foreach (var item in listAllItems)
             {
                 ZTreeNode model = new ZTreeNode();
-                model.id = item.Id;
-                model.pId = item.ParentId;
+                model.id = item.Id.ToString();
+                model.pId = ConvertZTreeGuid(item.ParentId);
                 model.name = item.Name;
                 model.open = true;
                 result.Add(model);
@@ -117,9 +117,9 @@ namespace Elight.Web.Areas.System.Controllers
             foreach (var item in data)
             {
                 TreeSelect model = new TreeSelect();
-                model.id = item.Id;
+                model.id = item.Id.ToString();
                 model.text = item.Name;
-                model.parentId = item.ParentId;
+                model.parentId = ConvertZTreeGuid(item.ParentId);
                 treeList.Add(model);
             }
             return Content(treeList.ToTreeSelectJson());

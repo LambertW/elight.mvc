@@ -28,7 +28,7 @@ namespace Elight.Web.Areas.System.Controllers
         }
 
         [HttpPost, AuthorizeChecked]
-        public ActionResult Index(int pageIndex, int pageSize, string itemId, string keyWord)
+        public ActionResult Index(int pageIndex, int pageSize, Guid itemId, string keyWord)
         {
             var pageData = _itemsDetailService.GetList(pageIndex, pageSize, itemId, keyWord);
             var result = new LayPadding<Sys_ItemsDetail>()
@@ -50,7 +50,7 @@ namespace Elight.Web.Areas.System.Controllers
         [HttpPost, AuthorizeChecked, ValidateAntiForgeryToken]
         public ActionResult Form(Sys_ItemsDetail model)
         {
-            if (model.Id.IsNullOrEmpty())
+            if (model.Id == null)
             {
                 var primaryKey = _itemsDetailService.Insert(model);
                 return primaryKey != null ? Success() : Error();
@@ -69,14 +69,14 @@ namespace Elight.Web.Areas.System.Controllers
         }
 
         [HttpPost, AuthorizeChecked]
-        public ActionResult Delete(string primaryKey)
+        public ActionResult Delete(Guid primaryKey)
         {
             int row = _itemsDetailService.Delete(primaryKey);
             return row > 0 ? Success() : Error();
         }
 
         [HttpPost]
-        public ActionResult GetForm(string primaryKey)
+        public ActionResult GetForm(Guid primaryKey)
         {
             var entity = _itemsDetailService.Get(primaryKey);
             return Content(entity.ToJson());

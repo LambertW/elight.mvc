@@ -29,7 +29,8 @@ namespace Elight.Service
             model.ModifyUser = model.CreateUser;
             model.ModifyTime = model.CreateTime;
             model.Avatar = "/content/framework/images/avatar.png";
-            return _userRepository.Insert(model);
+            _userRepository.Insert(model);
+            return model.Id;
         }
 
         public override int Update(Sys_User model)

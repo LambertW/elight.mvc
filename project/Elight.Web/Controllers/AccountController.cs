@@ -71,12 +71,12 @@ namespace Elight.Web.Controllers
             else
             {
                 Operator operatorModel = new Operator();
-                operatorModel.UserId = userEntity.Id;
+                operatorModel.UserId = userEntity.Id.ToString();
                 operatorModel.Account = userEntity.Account;
                 operatorModel.RealName = userEntity.RealName;
                 operatorModel.Avatar = userEntity.Avatar;
-                operatorModel.CompanyId = userEntity.CompanyId;
-                operatorModel.DepartmentId = userEntity.DepartmentId;
+                operatorModel.CompanyId = userEntity.CompanyId.ToString();
+                operatorModel.DepartmentId = userEntity.DepartmentId.ToString();
                 operatorModel.LoginTime = DateTime.Now;
                 operatorModel.Token = Guid.NewGuid().ToString().DESEncrypt();
                 OperatorProvider.Instance.Current = operatorModel;
@@ -146,11 +146,11 @@ namespace Elight.Web.Controllers
             {
                 //重新保存用户信息。
                 Operator operatorModel = new Operator();
-                operatorModel.UserId = userEntity.Id;
+                operatorModel.UserId = userEntity.Id.ToString();
                 operatorModel.Account = userEntity.Account;
                 operatorModel.RealName = userEntity.RealName;
                 operatorModel.Avatar = userEntity.Avatar;
-                operatorModel.CompanyId = userEntity.CompanyId;
+                operatorModel.CompanyId = userEntity.CompanyId.ToString();
                 operatorModel.DepartmentId = operatorModel.DepartmentId;
                 operatorModel.LoginTime = DateTime.Now;
                 operatorModel.Token = Guid.NewGuid().ToString().DESEncrypt();
@@ -185,8 +185,8 @@ namespace Elight.Web.Controllers
         public ActionResult GetInfoCardForm()
         {
             string userId = OperatorProvider.Instance.Current.UserId;
-            var userEntity = _userService.Get(userId);
-            var userLogOnEntity = _userLogOnService.GetByAccount(userId);
+            var userEntity = _userService.Get(Guid.Parse(userId));
+            var userLogOnEntity = _userLogOnService.GetByAccount(Guid.Parse(userId));
             return Content(userEntity.ToJson());
         }
 
@@ -240,7 +240,7 @@ namespace Elight.Web.Controllers
                 return Warning("两次密码输入不一致，请重新确认。");
             }
             string userId = OperatorProvider.Instance.Current.UserId;
-            var userLoginEntity = _userLogOnService.GetByAccount(userId);
+            var userLoginEntity = _userLogOnService.GetByAccount(Guid.Parse(userId));
             if (oldPassword.DESEncrypt(userLoginEntity.SecretKey).MD5Encrypt() != userLoginEntity.Password)
             {
                 return Warning("旧密码验证失败。");

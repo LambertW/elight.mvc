@@ -30,7 +30,7 @@ namespace Elight.Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string roleId)
+        public ActionResult Index(Guid roleId)
         {
             var listPerIds = _roleAuthorizeService.GetList(roleId).Select(c => c.ModuleId).ToList();
             var listAllPers = _permissionService.GetList();
@@ -39,8 +39,8 @@ namespace Elight.Web.Areas.System.Controllers
             {
                 ZTreeNode model = new ZTreeNode();
                 model.@checked = listPerIds.Contains(item.Id) ? model.@checked = true : model.@checked = false;
-                model.id = item.Id;
-                model.pId = item.ParentId;
+                model.id = item.Id.ToString();
+                model.pId = ConvertZTreeGuid(item.ParentId);
                 model.name = item.Name;
                 model.open = true;
                 result.Add(model);
@@ -49,9 +49,9 @@ namespace Elight.Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult Form(string roleId, string perIds)
+        public ActionResult Form(Guid roleId, string perIds)
         {
-            _roleAuthorizeService.Authorize(roleId, perIds.ToStrArray());
+            _roleAuthorizeService.Authorize(roleId, perIds.ToStrArray().Select(t => Guid.Parse(t)).ToArray());
             return Success("授权成功");
         }
 

@@ -12,7 +12,6 @@ namespace Elight.Infrastructure
     /// </summary>
     public static class ExtString
     {
-
         /// <summary>
         /// 判断字符串是否为空。
         /// </summary>

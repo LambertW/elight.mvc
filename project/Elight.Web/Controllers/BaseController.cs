@@ -31,5 +31,11 @@ namespace Elight.Web.Controllers
             return Content(new AjaxResult(ResultType.Info, message, data).ToJson());
         }
         #endregion
+
+        protected string ConvertZTreeGuid(Guid? guid)
+        {
+            var convertGuid = guid.GetValueOrDefault(Guid.Empty);
+            return convertGuid == Guid.Empty ? "0" : convertGuid.ToString();
+        }
     }
 }

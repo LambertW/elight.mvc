@@ -69,7 +69,7 @@ namespace Elight.Web.Controllers
             string userId = OperatorProvider.Instance.Current.UserId;
 
             List<LayNavbar> listNavbar = new List<LayNavbar>();
-            var listModules = _permissionService.GetList(userId);
+            var listModules = _permissionService.GetList(Guid.Parse(userId));
             foreach (var item in listModules.Where(c => c.Type == ModuleType.Menu && c.Layer == 0).ToList())
             {
                 LayNavbar navbarEntity = new LayNavbar();
@@ -92,7 +92,7 @@ namespace Elight.Web.Controllers
         public ActionResult GetPermission()
         {
             var userId = OperatorProvider.Instance.Current.UserId;
-            var modules = _permissionService.GetList(userId);
+            var modules = _permissionService.GetList(Guid.Parse(userId));
             return Content(modules.ToJson());
         }
     }

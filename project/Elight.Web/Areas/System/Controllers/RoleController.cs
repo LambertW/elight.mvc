@@ -50,7 +50,7 @@ namespace Elight.Web.Areas.System.Controllers
         [HttpPost, AuthorizeChecked, ValidateAntiForgeryToken]
         public ActionResult Form(Sys_Role model)
         {
-            if (model.Id.IsNullOrEmpty())
+            if (model.Id == null)
             {
                 var primaryKey = _roleService.Insert(model);
                 return primaryKey != null ? Success() : Error();
@@ -69,7 +69,7 @@ namespace Elight.Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetForm(string primaryKey)
+        public ActionResult GetForm(Guid primaryKey)
         {
             var entity = _roleService.Get(primaryKey);
             return Content(entity.ToJson());
@@ -78,7 +78,7 @@ namespace Elight.Web.Areas.System.Controllers
         [HttpPost, AuthorizeChecked]
         public ActionResult Delete(string primaryKey)
         {
-            int row = _roleService.Delete(primaryKey.ToStrArray());
+            int row = _roleService.Delete(primaryKey.ToStrArray().Select(t => Guid.Parse(t)).ToArray());
             return row > 0 ? Success() : Error();
         }
 
@@ -90,7 +90,7 @@ namespace Elight.Web.Areas.System.Controllers
             foreach (var item in listRole)
             {
                 TreeSelect model = new TreeSelect();
-                model.id = item.Id;
+                model.id = item.Id.ToString();
                 model.text = item.Name;
                 listTree.Add(model);
             }

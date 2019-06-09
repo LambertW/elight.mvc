@@ -49,7 +49,7 @@ namespace Elight.Web.Areas.System.Controllers
         [HttpPost, AuthorizeChecked, ValidateAntiForgeryToken]
         public ActionResult Form(Sys_Organize model)
         {
-            if (model.Id.IsNullOrEmpty())
+            if (model.Id == null)
             {
                 var primaryKey = _organizeService.Insert(model);
                 return primaryKey != null ? Success() : Error();
@@ -62,14 +62,14 @@ namespace Elight.Web.Areas.System.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetForm(string primaryKey)
+        public ActionResult GetForm(Guid primaryKey)
         {
             var entity = _organizeService.Get(primaryKey);
             return Content(entity.ToJson());
         }
 
         [HttpPost, AuthorizeChecked]
-        public ActionResult Delete(string primaryKey)
+        public ActionResult Delete(Guid primaryKey)
         {
             long count = _organizeService.GetChildCount(primaryKey);
             if (count == 0)
@@ -94,9 +94,9 @@ namespace Elight.Web.Areas.System.Controllers
             foreach (Sys_Organize item in data)
             {
                 TreeSelect model = new TreeSelect();
-                model.id = item.Id;
+                model.id = item.Id.ToString();
                 model.text = item.FullName;
-                model.parentId = item.ParentId;
+                model.parentId = ConvertZTreeGuid(item.ParentId);
                 treeList.Add(model);
             }
             return Content(treeList.ToTreeSelectJson());
