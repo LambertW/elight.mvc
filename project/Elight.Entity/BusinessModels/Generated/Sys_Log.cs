@@ -19,14 +19,14 @@ using FreeSql.DataAnnotations;
 namespace Elight.Entity {
 
 	[JsonObject(MemberSerialization.OptIn), Table(Name = "dbo.Sys_Log")]
-    public partial class Sys_Log : IEntity<string>
+    public partial class Sys_Log : IEntity<Guid>
     {
 
 		/// <summary>
 		/// 主键
 		/// </summary>
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string Id { get; set; }
+		[JsonProperty]
+		public Guid Id { get; set; }
 
 		/// <summary>
 		/// 操作账户

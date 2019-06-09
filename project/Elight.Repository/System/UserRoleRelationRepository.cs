@@ -8,16 +8,16 @@ using Elight.IRepository;
 
 namespace Elight.Repository
 {
-    public partial class UserRoleRelationRepository : BaseRepository<Sys_UserRoleRelation, string>, IUserRoleRelationRepository
+    public partial class UserRoleRelationRepository : BaseRepository<Sys_UserRoleRelation, Guid>, IUserRoleRelationRepository
     {
-        public List<Sys_UserRoleRelation> GetList(string userId)
+        public List<Sys_UserRoleRelation> GetList(Guid userId)
         {
             return Repository.Where(t => t.UserId == userId).ToList();
         }
 
-        public int Delete(params string[] userIds)
+        public int DeleteByUserIds(params Guid[] userIds)
         {
-            return Delete(t => userIds.Contains(t.UserId));
+            return Delete(t => userIds.Contains(t.UserId.Value));
         }
     }
 }

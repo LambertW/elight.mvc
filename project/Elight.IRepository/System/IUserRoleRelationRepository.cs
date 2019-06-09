@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace Elight.IRepository
 {
-    public partial interface IUserRoleRelationRepository : IBaseRepository<Sys_UserRoleRelation, string>
+    public partial interface IUserRoleRelationRepository : IBaseRepository<Sys_UserRoleRelation, Guid>
     {
         /// <summary>
         /// 获取指定用户ID所有用户角色关系实体。
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        List<Sys_UserRoleRelation> GetList(string userId);
+        List<Sys_UserRoleRelation> GetList(Guid userId);
 
         /// <summary>
         /// 批量删除用户角色关系实体。
         /// </summary>
         /// <param name="userIds">用户ID集合</param>
         /// <returns></returns>
-        int Delete(params string[] userIds);
+        int DeleteByUserIds(params Guid[] userIds);
     }
 }

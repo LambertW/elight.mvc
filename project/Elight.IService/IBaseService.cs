@@ -18,13 +18,14 @@ namespace Elight.IService
         /// </summary>
         /// <param name="primaryKey">主键</param>
         /// <returns></returns>
-        bool Exists(object primaryKey);
+        bool Exists(TPrimaryKey primaryKey);
         /// <summary>
         /// 查询一条记录。
         /// </summary>
         /// <param name="primaryKey">主键</param>
         /// <returns></returns>
-        TEntity Get(object primaryKey);
+        TEntity Get(TPrimaryKey primaryKey);
+        List<TEntity> GetList();
         /// <summary>
         /// 新增一条记录。
         /// </summary>
@@ -36,7 +37,8 @@ namespace Elight.IService
         /// </summary>
         /// <param name="primaryKey">主键</param>
         /// <returns></returns>
-        int Delete(object primaryKey);
+        int Delete(TPrimaryKey primaryKey);
+        int Delete(TPrimaryKey[] primaryKey);
         /// <summary>
         /// 更新一条记录。
         /// </summary>

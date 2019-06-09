@@ -19,14 +19,14 @@ using FreeSql.DataAnnotations;
 namespace Elight.Entity {
 
 	[JsonObject(MemberSerialization.OptIn), Table(Name = "dbo.Sys_Role")]
-    public partial class Sys_Role : IEntity<string>
+	public partial class Sys_Role : IEntity<Guid>
     {
 
 		/// <summary>
 		/// 主键
 		/// </summary>
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string Id { get; set; }
+		[JsonProperty]
+		public Guid Id { get; set; }
 
 		/// <summary>
 		/// 是否可编辑
@@ -85,8 +85,8 @@ namespace Elight.Entity {
 		/// <summary>
 		/// 组织ID
 		/// </summary>
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string OrganizeId { get; set; }
+		[JsonProperty]
+		public Guid? OrganizeId { get; set; }
 
 		/// <summary>
 		/// 备注
@@ -108,6 +108,7 @@ namespace Elight.Entity {
 
 
 		#region 外键 => 导航属性，ManyToMany
+
 		#endregion
 	}
 

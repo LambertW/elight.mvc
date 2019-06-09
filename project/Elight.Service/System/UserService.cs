@@ -11,18 +11,18 @@ using Elight.Entity.ResponseModels;
 
 namespace Elight.Service
 {
-    public partial class UserService : BaseService<Sys_User, string>, IUserService
+    public partial class UserService : BaseService<Sys_User, Guid>, IUserService
     {
         private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository) : base(userRepository)
         {
-            this._userRepository = userRepository;
+            _userRepository = userRepository;
         }
 
         public override object Insert(Sys_User model)
         {
-            model.Id = Guid.NewGuid().ToString();
+            //model.Id = Guid.NewGuid().ToString();
             model.DeleteMark = false;
             model.CreateUser = OperatorProvider.Instance.Current.Account;
             model.CreateTime = DateTime.Now;
@@ -51,11 +51,6 @@ namespace Elight.Service
         public Page<Sys_User> GetList(int pageIndex, int pageSize, string keyWord)
         {
             return _userRepository.GetList(pageIndex, pageSize, keyWord);
-        }
-
-        public int Delete(params string[] primaryKeys)
-        {
-            return _userRepository.Delete(primaryKeys);
         }
 
         public int UpdateBasicInfo(Sys_User model)

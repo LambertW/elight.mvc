@@ -7,21 +7,20 @@ using System.Threading.Tasks;
 
 namespace Elight.IRepository
 {
-    public partial interface IUserLogOnRepository : IBaseRepository<Sys_UserLogOn, string>
+    public partial interface IUserLogOnRepository : IBaseRepository<Sys_UserLogOn, Guid>
     {
         /// <summary>
         /// 根据用户ID获取用户登陆实体。
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        Sys_UserLogOn GetByAccount(string userId);
+        Sys_UserLogOn GetByAccount(Guid userId);
 
         /// <summary>
         /// 批量删除用户登陆实体。
         /// </summary>
         /// <param name="userIds">用户ID集合</param>
         /// <returns></returns>
-        int Delete(params string[] userIds);
-
+        int DeleteByUserIds(params Guid[] userIds);
     }
 }

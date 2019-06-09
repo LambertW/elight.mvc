@@ -11,13 +11,15 @@ using Elight.Entity.ResponseModels;
 
 namespace Elight.Service
 {
-    public partial class RoleService : BaseService<Sys_Role, string>, IRoleService
+    public partial class RoleService : BaseService<Sys_Role, Guid>, IRoleService
     {
         private readonly IRoleRepository _roleRepository;
+        private readonly IRoleAuthorizeRepository _roleAuthorizeRepository;
 
-        public RoleService(IRoleRepository roleRepository)
+        public RoleService(IRoleRepository roleRepository, IRoleAuthorizeRepository roleAuthorizeRepository) : base(roleRepository)
         {
-            this._roleRepository = roleRepository;
+            _roleRepository = roleRepository;
+            _roleAuthorizeRepository = roleAuthorizeRepository;
         }
 
         public Page<Sys_Role> GetList(int pageIndex, int pageSize, string keyWord)
@@ -27,7 +29,7 @@ namespace Elight.Service
 
         public override object Insert(Sys_Role model)
         {
-            model.Id = Guid.NewGuid().ToString();
+            //model.Id = Guid.NewGuid().ToString();
             model.IsEnabled = model.IsEnabled == null ? false : true;
             model.AllowEdit = model.AllowEdit == null ? false : true;
             model.DeleteMark = false;
@@ -50,14 +52,10 @@ namespace Elight.Service
             return _roleRepository.Update(model, updateColumns);
         }
 
-        public int Delete(string[] primaryKeys)
+        public override int Delete(Guid[] primaryKeys)
         {
-            return _roleRepository.Delete(primaryKeys);
-        }
-
-        public List<Sys_Role> GetList()
-        {
-            return _roleRepository.GetList();
+            _roleAuthorizeRepository.Delete(t => primaryKeys.Contains(t.RoleId.Value));
+            return base.Delete(primaryKeys);
         }
     }
 }

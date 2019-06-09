@@ -19,11 +19,11 @@ using FreeSql.DataAnnotations;
 namespace Elight.Entity {
 
 	[JsonObject(MemberSerialization.OptIn), Table(Name = "dbo.Sys_UserLogOn")]
-    public partial class Sys_UserLogOn : IEntity<string>
+    public partial class Sys_UserLogOn : IEntity<Guid>
     {
 
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string Id { get; set; }
+		[JsonProperty]
+		public Guid Id { get; set; }
 
 		[JsonProperty]
 		public bool? AllowMultiUserOnline { get; set; }
@@ -64,8 +64,8 @@ namespace Elight.Entity {
 		[JsonProperty, Column(DbType = "varchar(50)")]
 		public string Theme { get; set; }
 
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string UserId { get; set; }
+		[JsonProperty]
+		public Guid? UserId { get; set; }
 
 
 		#region 外键 => 导航属性，ManyToMany

@@ -8,14 +8,8 @@ using Elight.Entity.ResponseModels;
 
 namespace Elight.IService
 {
-    public partial interface IItemService : IBaseService<Sys_Item, string>
+    public partial interface IItemService : IBaseService<Sys_Item, Guid>
     {
-        /// <summary>
-        /// 获取所有字典列表。
-        /// </summary>
-        /// <returns></returns>
-        List<Sys_Item> GetList();
-
         /// <summary>
         /// 分页获取字典列表。
         /// </summary>
@@ -30,6 +24,6 @@ namespace Elight.IService
         /// </summary>
         /// <param name="parentId">父级字典ID</param>
         /// <returns></returns>
-        long GetChildCount(string parentId);
+        long GetChildCount(Guid parentId);
     }
 }

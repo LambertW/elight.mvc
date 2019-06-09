@@ -8,15 +8,8 @@ using System.Threading.Tasks;
 
 namespace Elight.IService
 {
-    public partial interface IRoleService : IBaseService<Sys_Role, string>
+    public partial interface IRoleService : IBaseService<Sys_Role, Guid>
     {
-
-        /// <summary>
-        /// 获取所有角色列表。
-        /// </summary>
-        /// <returns></returns>
-        List<Sys_Role> GetList();
-
         /// <summary>
         /// 分页获取角色列表。
         /// </summary>
@@ -25,13 +18,5 @@ namespace Elight.IService
         /// <param name="keyWord">角色编码或名称</param>
         /// <returns></returns>
         Page<Sys_Role> GetList(int pageIndex, int pageSize, string keyWord);
-
-        /// <summary>
-        /// 批量删除角色。
-        /// </summary>
-        /// <param name="primaryKeys">主键集合</param>
-        /// <returns></returns>
-        int Delete(string[] primaryKeys);
-
     }
 }

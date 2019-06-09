@@ -9,9 +9,9 @@ using Elight.IRepository;
 
 namespace Elight.Repository
 {
-    public partial class ItemsDetailRepository : BaseRepository<Sys_ItemsDetail, string>, IItemsDetailRepository
+    public partial class ItemsDetailRepository : BaseRepository<Sys_ItemsDetail, Guid>, IItemsDetailRepository
     {
-        public Page<Sys_ItemsDetail> GetList(int pageIndex, int pageSize, string itemId, string keyWord)
+        public Page<Sys_ItemsDetail> GetList(int pageIndex, int pageSize, Guid itemId, string keyWord)
         {
             var condition = Repository
                 .Where(t => t.DeleteMark == false)
@@ -19,11 +19,6 @@ namespace Elight.Repository
                 .WhereIf(!string.IsNullOrEmpty(keyWord), t => t.Name.Contains(keyWord) || t.EnCode.Contains(keyWord));
 
             return ToPage(condition, pageIndex, pageSize, "SortCode");
-        }
-
-        public int Delete(string itemId)
-        {
-            return Delete(t => t.ItemId == itemId);
         }
     }
 }

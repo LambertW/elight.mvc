@@ -9,7 +9,7 @@ using Elight.Entity.ResponseModels;
 
 namespace Elight.Repository
 {
-    public partial class LogRepository : BaseRepository<Sys_Log, string>, ILogRepository
+    public partial class LogRepository : BaseRepository<Sys_Log, Guid>, ILogRepository
     {
         public Page<Sys_Log> GetList(int pageIndex, int pageSize, DateTime limitDate, string keyWord)
         {

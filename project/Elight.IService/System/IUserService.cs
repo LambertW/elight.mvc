@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IService
 {
-    public partial interface IUserService : IBaseService<Sys_User, string>
+    public partial interface IUserService : IBaseService<Sys_User, Guid>
     {
         /// <summary>
         /// 根据账号查询用户。
@@ -25,13 +25,6 @@ namespace Elight.IService
         /// <param name="keyWord">角色编码或名称</param>
         /// <returns></returns>
         Page<Sys_User> GetList(int pageIndex, int pageSize, string keyWord);
-
-        /// <summary>
-        /// 批量删除用户。
-        /// </summary>
-        /// <param name="primaryKeys">主键集合</param>
-        /// <returns></returns>
-        int Delete(params string[] primaryKeys);
 
         /// <summary>
         /// 更新用户基础属性信息。

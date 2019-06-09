@@ -19,11 +19,11 @@ using FreeSql.DataAnnotations;
 namespace Elight.Entity {
 
 	[JsonObject(MemberSerialization.OptIn), Table(Name = "dbo.Sys_UserRoleRelation")]
-	public partial class Sys_UserRoleRelation : IEntity<string>
+    public partial class Sys_UserRoleRelation : IEntity<Guid>
     {
 
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string Id { get; set; }
+		[JsonProperty]
+		public Guid Id { get; set; }
 
 		[JsonProperty]
 		public DateTime? CreateTime { get; set; }
@@ -31,11 +31,11 @@ namespace Elight.Entity {
 		[JsonProperty, Column(DbType = "varchar(50)")]
 		public string CreateUser { get; set; }
 
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string RoleId { get; set; }
+		[JsonProperty]
+		public Guid? RoleId { get; set; }
 
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string UserId { get; set; }
+		[JsonProperty]
+		public Guid? UserId { get; set; }
 
 
 		#region 外键 => 导航属性，ManyToMany

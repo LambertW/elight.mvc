@@ -9,7 +9,7 @@ using Elight.IRepository;
 
 namespace Elight.Repository
 {
-    public partial class OrganizeRepository : BaseRepository<Sys_Organize, string>, IOrganizeRepository
+    public partial class OrganizeRepository : BaseRepository<Sys_Organize, Guid>, IOrganizeRepository
     {
         public override List<Sys_Organize> GetList()
         {
@@ -29,7 +29,7 @@ namespace Elight.Repository
             return ToPage(condition, pageIndex, pageSize, "SortCode");
         }
 
-        public long GetChildCount(string parentId)
+        public long GetChildCount(Guid parentId)
         {
             return Count(t => t.ParentId == parentId);
         }

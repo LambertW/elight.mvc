@@ -8,14 +8,8 @@ using System.Threading.Tasks;
 
 namespace Elight.IRepository
 {
-    public partial interface IOrganizeRepository : IBaseRepository<Sys_Organize, string>
+    public partial interface IOrganizeRepository : IBaseRepository<Sys_Organize, Guid>
     {
-        /// <summary>
-        /// 获取所有组织机构列表。
-        /// </summary>
-        /// <returns></returns>
-        //List<Sys_Organize> GetList();
-
         /// <summary>
         /// 分页获取组织机构列表。
         /// </summary>
@@ -30,6 +24,6 @@ namespace Elight.IRepository
         /// </summary>
         /// <param name="parentId">父级机构ID</param>
         /// <returns></returns>
-        long GetChildCount(string parentId);
+        long GetChildCount(Guid parentId);
     }
 }

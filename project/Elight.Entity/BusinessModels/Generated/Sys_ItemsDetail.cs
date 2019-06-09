@@ -19,14 +19,13 @@ using FreeSql.DataAnnotations;
 namespace Elight.Entity {
 
 	[JsonObject(MemberSerialization.OptIn), Table(Name = "dbo.Sys_ItemsDetail")]
-    public partial class Sys_ItemsDetail : IEntity<string>
-    {
+    public partial class Sys_ItemsDetail : IEntity<Guid> {
 
 		/// <summary>
 		/// 主键
 		/// </summary>
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string Id { get; set; }
+		[JsonProperty]
+		public Guid Id { get; set; }
 
 		/// <summary>
 		/// 创建时间
@@ -67,8 +66,8 @@ namespace Elight.Entity {
 		/// <summary>
 		/// 父级
 		/// </summary>
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string ItemId { get; set; }
+		[JsonProperty]
+		public Guid? ItemId { get; set; }
 
 		/// <summary>
 		/// 修改时间

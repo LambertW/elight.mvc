@@ -8,9 +8,8 @@ using Elight.Entity.ResponseModels;
 
 namespace Elight.IService
 {
-    public partial interface ILogService : IBaseService<Sys_Log, string>
+    public partial interface ILogService : IBaseService<Sys_Log, Guid>
     {
-
         /// <summary>
         /// 分页获取指定用户操作记录。
         /// </summary>

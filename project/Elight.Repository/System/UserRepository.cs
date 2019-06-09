@@ -9,7 +9,7 @@ using Elight.IRepository;
 
 namespace Elight.Repository
 {
-    public partial class UserRepository : BaseRepository<Sys_User, string>, IUserRepository
+    public partial class UserRepository : BaseRepository<Sys_User, Guid>, IUserRepository
     {
         public Sys_User GetByAccount(string account)
         {
@@ -52,11 +52,6 @@ namespace Elight.Repository
             ); 
 
             return new Page<Sys_User> { Items = items, TotalItems = total };
-        }
-
-        public int Delete(string[] primaryKeys)
-        {
-            return Delete(t => primaryKeys.Contains(t.Id));
         }
     }
 }

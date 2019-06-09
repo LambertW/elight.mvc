@@ -10,21 +10,21 @@ using Elight.IRepository;
 
 namespace Elight.Service
 {
-    public partial class UserRoleRelationService : BaseService<Sys_UserRoleRelation, string>, IUserRoleRelationService
+    public partial class UserRoleRelationService : BaseService<Sys_UserRoleRelation, Guid>, IUserRoleRelationService
     {
         private readonly IUserRoleRelationRepository _userRoleRelationRepository;
 
-        public UserRoleRelationService(IUserRoleRelationRepository userRoleRelationRepository)
+        public UserRoleRelationService(IUserRoleRelationRepository userRoleRelationRepository) : base(userRoleRelationRepository)
         {
-            this._userRoleRelationRepository = userRoleRelationRepository;
+            _userRoleRelationRepository = userRoleRelationRepository;
         }
 
-        public List<Sys_UserRoleRelation> GetList(string userId)
+        public List<Sys_UserRoleRelation> GetList(Guid userId)
         {
             return _userRoleRelationRepository.GetList(userId);
         }
 
-        public void SetRole(string userId, params string[] roleIds)
+        public void SetRole(Guid userId, params Guid[] roleIds)
         {
             //a.用户需要重新设置的角色ID集合。
             var listNewRoleIds = roleIds.ToList();
@@ -33,9 +33,9 @@ namespace Elight.Service
             //c.删除用户新设置和原有用户角色关系集合中相同的记录。
             for (int i = listOldRRs.Count - 1; i >= 0; i--)
             {
-                if (listNewRoleIds.Contains(listOldRRs[i].RoleId))
+                if (listNewRoleIds.Contains(listOldRRs[i].RoleId.Value))
                 {
-                    listNewRoleIds.Remove(listOldRRs[i].RoleId);
+                    listNewRoleIds.Remove(listOldRRs[i].RoleId.Value);
                     listOldRRs.Remove(listOldRRs[i]);
                 }
             }
@@ -46,7 +46,7 @@ namespace Elight.Service
                 {
                     UserId = userId,
                     RoleId = roleId,
-                    Id = Guid.NewGuid().ToString(),
+                    //Id = Guid.NewGuid().ToString(),
                     CreateUser = OperatorProvider.Instance.Current.Account,
                     CreateTime = DateTime.Now
                 });
@@ -56,11 +56,6 @@ namespace Elight.Service
             {
                 _userRoleRelationRepository.Delete(rrObj);
             });
-        }
-
-        public int Delete(params string[] userIds)
-        {
-            return _userRoleRelationRepository.Delete(userIds);
         }
     }
 }

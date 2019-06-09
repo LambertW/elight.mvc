@@ -19,14 +19,14 @@ using FreeSql.DataAnnotations;
 namespace Elight.Entity {
 
 	[JsonObject(MemberSerialization.OptIn), Table(Name = "dbo.Sys_RoleAuthorize")]
-    public partial class Sys_RoleAuthorize : IEntity<string>
+    public partial class Sys_RoleAuthorize : IEntity<Guid>
     {
 
 		/// <summary>
 		/// 主键
 		/// </summary>
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string Id { get; set; }
+		[JsonProperty]
+		public Guid Id { get; set; }
 
 		/// <summary>
 		/// 创建时间
@@ -43,14 +43,14 @@ namespace Elight.Entity {
 		/// <summary>
 		/// 模块ID
 		/// </summary>
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string ModuleId { get; set; }
+		[JsonProperty]
+		public Guid? ModuleId { get; set; }
 
 		/// <summary>
 		/// 角色ID
 		/// </summary>
-		[JsonProperty, Column(DbType = "varchar(50)")]
-		public string RoleId { get; set; }
+		[JsonProperty]
+		public Guid? RoleId { get; set; }
 
 
 		#region 外键 => 导航属性，ManyToMany

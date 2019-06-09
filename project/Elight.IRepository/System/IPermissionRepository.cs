@@ -8,14 +8,8 @@ using System.Threading.Tasks;
 
 namespace Elight.IRepository
 {
-    public partial interface IPermissionRepository : IBaseRepository<Sys_Permission, string>
+    public partial interface IPermissionRepository : IBaseRepository<Sys_Permission, Guid>
     {
-        /// <summary>
-        /// 获取所有权限列表。
-        /// </summary>
-        /// <returns></returns>
-        //List<Sys_Permission> GetList();
-
         /// <summary>
         /// 分页获取权限列表。
         /// </summary>
@@ -26,18 +20,10 @@ namespace Elight.IRepository
         Page<Sys_Permission> GetList(int pageIndex, int pageSize, string keyWord);
 
         /// <summary>
-        /// 批量删除权限。
-        /// </summary>
-        /// <param name="primaryKeys">权限ID集合</param>
-        /// <returns></returns>
-        int Delete(params string[] primaryKeys);
-
-        /// <summary>
         /// 获取子级权限数量。
         /// </summary>
         /// <param name="parentId">父级权限ID</param>
         /// <returns></returns>
-        long GetChildCount(string parentId);
-
+        long GetChildCount(Guid parentId);
     }
 }

@@ -8,20 +8,14 @@ using System.Threading.Tasks;
 
 namespace Elight.IService
 {
-    public partial interface IPermissionService : IBaseService<Sys_Permission, string>
+    public partial interface IPermissionService : IBaseService<Sys_Permission, Guid>
     {
-        /// <summary>
-        /// 获取所有权限列表。
-        /// </summary>
-        /// <returns></returns>
-        List<Sys_Permission> GetList();
-
         /// <summary>
         /// 根据用户ID获取权限列表。
         /// </summary>
         /// <param name="userId">用户ID</param>
         /// <returns></returns>
-        List<Sys_Permission> GetList(string userId);
+        List<Sys_Permission> GetList(Guid userId);
 
         /// <summary>
         /// 分页获取权限列表。
@@ -38,20 +32,13 @@ namespace Elight.IService
         /// <param name="userId">用户ID</param>
         /// <param name="action">请求URL</param>
         /// <returns></returns>
-        bool ActionValidate(string userId, string action);
-
-        /// <summary>
-        /// 批量删除权限。
-        /// </summary>
-        /// <param name="primaryKeys">权限ID集合</param>
-        /// <returns></returns>
-        int Delete(params string[] primaryKeys);
+        bool ActionValidate(Guid userId, string action);
 
         /// <summary>
         /// 获取子级权限数量。
         /// </summary>
         /// <param name="parentId">父级权限ID</param>
         /// <returns></returns>
-        long GetChildCount(string parentId);
+        long GetChildCount(Guid parentId);
     }
 }

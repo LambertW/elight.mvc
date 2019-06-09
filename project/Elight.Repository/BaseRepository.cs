@@ -32,11 +32,11 @@ namespace Elight.Repository
             }
         }
 
-        public bool Exists(object primaryKey)
+        public bool Exists(TPrimayKey primaryKey)
         {
             return Repository.Where(t => t.Id.Equals(primaryKey)).Count() > 0;
         }
-        public TEntity Get(object primaryKey)
+        public TEntity Get(TPrimayKey primaryKey)
         {
             return Repository.Get((TPrimayKey)primaryKey);
         }
@@ -50,10 +50,15 @@ namespace Elight.Repository
             return Repository.Insert(model);
         }
 
-        public int Delete(object primaryKey)
+        public int Delete(TPrimayKey primaryKey)
         {
-            return Repository.Delete((TPrimayKey)primaryKey);
+            return Delete(new TPrimayKey[] { primaryKey });
         }
+        public int Delete(TPrimayKey[] primaryKey)
+        {
+            return Repository.Delete(t => primaryKey.Contains(t.Id));
+        }
+
         public int Delete(TEntity model)
         {
             return Repository.Delete(model);

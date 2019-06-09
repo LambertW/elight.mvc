@@ -10,26 +10,26 @@ using Elight.IRepository;
 
 namespace Elight.Service
 {
-    public partial class UserLogOnService : BaseService<Sys_UserLogOn, string>, IUserLogOnService
+    public partial class UserLogOnService : BaseService<Sys_UserLogOn, Guid>, IUserLogOnService
     {
         private readonly IUserLogOnRepository _userLogOnRepository;
 
-        public UserLogOnService(IUserLogOnRepository userLogOnRepository)
+        public UserLogOnService(IUserLogOnRepository userLogOnRepository) : base(userLogOnRepository)
         {
-            this._userLogOnRepository = userLogOnRepository;
+            _userLogOnRepository = userLogOnRepository;
         }
 
         public override object Insert(Sys_UserLogOn model)
         {
-            model.Id = Guid.NewGuid().ToString();
-            model.SecretKey = model.Id.DESEncrypt().Substring(0, 8);
+            model.Id = Guid.NewGuid();
+            model.SecretKey = model.Id.ToString().DESEncrypt().Substring(0, 8);
             model.Password = model.Password.DESEncrypt(model.SecretKey).MD5Encrypt();
             model.LoginCount = 0;
             model.IsOnLine = false;
             return _userLogOnRepository.Insert(model);
         }
 
-        public Sys_UserLogOn GetByAccount(string userId)
+        public Sys_UserLogOn GetByAccount(Guid userId)
         {
             return _userLogOnRepository.GetByAccount(userId);
         }
@@ -50,11 +50,6 @@ namespace Elight.Service
             var updateColumns = new List<string>() { 
                 "IsOnLine", "PrevVisitTime", "LastVisitTime", "LoginCount" };
             return _userLogOnRepository.Update(model, updateColumns);
-        }
-
-        public int Delete(params string[] userIds)
-        {
-            return _userLogOnRepository.Delete(userIds);
         }
 
         public bool ModifyPwd(Sys_UserLogOn model)

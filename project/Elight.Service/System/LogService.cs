@@ -11,13 +11,13 @@ using Elight.Entity.ResponseModels;
 
 namespace Elight.Service
 {
-    public partial class LogService : BaseService<Sys_Log, string>, ILogService
+    public partial class LogService : BaseService<Sys_Log, Guid>, ILogService
     {
         private readonly ILogRepository _logRepository;
 
-        public LogService(ILogRepository _logRepository)
+        public LogService(ILogRepository logRepository) : base(logRepository)
         {
-            this._logRepository = _logRepository;
+            _logRepository = logRepository;
         }
 
         public Page<Sys_Log> GetList(int pageIndex, int pageSize, DateTime limitDate, string keyWord)

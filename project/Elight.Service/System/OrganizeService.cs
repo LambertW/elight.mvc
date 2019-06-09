@@ -11,18 +11,13 @@ using Elight.Entity.ResponseModels;
 
 namespace Elight.Service
 {
-    public partial class OrganizeService : BaseService<Sys_Organize, string>, IOrganizeService
+    public partial class OrganizeService : BaseService<Sys_Organize, Guid>, IOrganizeService
     {
         private readonly IOrganizeRepository _organizeRepository;
 
-        public OrganizeService(IOrganizeRepository organizeRepository)
+        public OrganizeService(IOrganizeRepository organizeRepository) : base(organizeRepository)
         {
-            this._organizeRepository = organizeRepository;
-        }
-
-        public List<Sys_Organize> GetList()
-        {
-            return _organizeRepository.GetList();
+            _organizeRepository = organizeRepository;
         }
 
         public Page<Sys_Organize> GetList(int pageIndex, int pageSize, string keyWord)
@@ -32,8 +27,8 @@ namespace Elight.Service
 
         public override object Insert(Sys_Organize model)
         {
-            model.Id = Guid.NewGuid().ToString();
-            model.Layer = _organizeRepository.Get(model.ParentId).Layer += 1;
+            //model.Id = Guid.NewGuid().ToString();
+            model.Layer = !model.ParentId.HasValue ? 0 : _organizeRepository.Get(model.ParentId.Value).Layer += 1;
             model.DeleteMark = false;
             model.CreateUser = OperatorProvider.Instance.Current.Account;
             model.CreateTime = DateTime.Now;
@@ -53,7 +48,7 @@ namespace Elight.Service
             return _organizeRepository.Update(model, updateColumns);
         }
 
-        public long GetChildCount(string parentId)
+        public long GetChildCount(Guid parentId)
         {
             return _organizeRepository.GetChildCount(parentId);
         }

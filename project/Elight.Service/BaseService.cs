@@ -15,40 +15,46 @@ namespace Elight.Service
     /// </summary>
     public partial class BaseService<TEntity, TPrimaryKey> : IBaseService<TEntity, TPrimaryKey> where TEntity : class, IEntity<TPrimaryKey>
     {
-        private IBaseRepository<TEntity, TPrimaryKey> _baseDal;
+        protected IBaseRepository<TEntity, TPrimaryKey> Repository;
 
-        public BaseService()
+        public BaseService(IBaseRepository<TEntity, TPrimaryKey> repository)
         {
-            if (_baseDal == null)
-            {
-                _baseDal = new BaseRepository<TEntity, TPrimaryKey>();
-            }
+            Repository = repository;
         }
 
-        public bool Exists(object primaryKey)
+        public bool Exists(TPrimaryKey primaryKey)
         {
-            return _baseDal.Exists(primaryKey);
+            return Repository.Exists(primaryKey);
         }
 
-        public TEntity Get(object primaryKey)
+        public TEntity Get(TPrimaryKey primaryKey)
         {
-            return _baseDal.Get(primaryKey);
+            return Repository.Get(primaryKey);
         }
 
         public virtual object Insert(TEntity model)
         {
-            return _baseDal.Insert(model);
+            return Repository.Insert(model);
         }
 
         public virtual int Update(TEntity model)
         {
-            return _baseDal.Update(model);
+            return Repository.Update(model);
         }
 
-        public virtual int Delete(object primaryKey)
+        public virtual int Delete(TPrimaryKey primaryKey)
         {
-            return _baseDal.Delete(primaryKey);
+            return Delete(new TPrimaryKey[] { primaryKey });
         }
 
+        public virtual int Delete(TPrimaryKey[] primaryKeys)
+        {
+            return Repository.Delete(primaryKeys);
+        }
+
+        public virtual List<TEntity> GetList()
+        {
+            return Repository.GetList();
+        }
     }
 }

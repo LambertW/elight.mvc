@@ -19,7 +19,8 @@ using FreeSql.DataAnnotations;
 namespace Elight.Entity {
 
 	[JsonObject(MemberSerialization.OptIn), Table(Name = "dbo.Sys_Item_Demo")]
-    public partial class Sys_Item_Demo: IEntity<Guid> {
+    public partial class Sys_Item_Demo : IEntity<Guid>
+    {
 
 		[JsonProperty]
 		public Guid Id { get; set; }

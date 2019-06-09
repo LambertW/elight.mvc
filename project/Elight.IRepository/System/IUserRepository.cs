@@ -8,9 +8,8 @@ using Elight.Entity.ResponseModels;
 
 namespace Elight.IRepository
 {
-    public partial interface IUserRepository : IBaseRepository<Sys_User, string>
+    public partial interface IUserRepository : IBaseRepository<Sys_User, Guid>
     {
-
         /// <summary>
         /// 根据账号获取用户。
         /// </summary>
@@ -26,13 +25,5 @@ namespace Elight.IRepository
         /// <param name="keyWord">角色编码或名称</param>
         /// <returns></returns>
         Page<Sys_User> GetList(int pageIndex, int pageSize, string keyWord);
-
-        /// <summary>
-        /// 批量删除用户。
-        /// </summary>
-        /// <param name="primaryKeys">主键集合</param>
-        /// <returns></returns>
-        int Delete(string[] primaryKeys);
-
     }
 }

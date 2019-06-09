@@ -9,7 +9,7 @@ using Elight.IRepository;
 
 namespace Elight.Repository
 {
-    public partial class PermissionRepository : BaseRepository<Sys_Permission, string>, IPermissionRepository
+    public partial class PermissionRepository : BaseRepository<Sys_Permission, Guid>, IPermissionRepository
     {
         public override List<Sys_Permission> GetList()
         {
@@ -29,12 +29,7 @@ namespace Elight.Repository
             return ToPage(condition, pageIndex, pageSize, "SortCode");
         }
 
-        public int Delete(params string[] primaryKeys)
-        {
-            return Delete(t => primaryKeys.Contains(t.Id));
-        }
-
-        public long GetChildCount(string parentId)
+        public long GetChildCount(Guid parentId)
         {
             return Count(t => t.ParentId == parentId);
         }

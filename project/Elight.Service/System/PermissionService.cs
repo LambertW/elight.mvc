@@ -11,24 +11,24 @@ using Elight.Entity.ResponseModels;
 
 namespace Elight.Service
 {
-    public partial class PermissionService : BaseService<Sys_Permission, string>, IPermissionService
+    public partial class PermissionService : BaseService<Sys_Permission, Guid>, IPermissionService
     {
         private readonly IPermissionRepository _permissionRepository;
         private readonly IRoleAuthorizeRepository _roleAuthorizeRepository;
         private readonly IUserRoleRelationRepository _userRoleRelationRepository;
 
         public PermissionService(IPermissionRepository permissionRepository, IRoleAuthorizeRepository roleAuthorizeRepository,
-            IUserRoleRelationRepository userRoleRelationRepository)
+            IUserRoleRelationRepository userRoleRelationRepository) : base(permissionRepository)
         {
-            this._permissionRepository = permissionRepository;
-            this._roleAuthorizeRepository = roleAuthorizeRepository;
-            this._userRoleRelationRepository = userRoleRelationRepository;
+            _permissionRepository = permissionRepository;
+            _roleAuthorizeRepository = roleAuthorizeRepository;
+            _userRoleRelationRepository = userRoleRelationRepository;
         }
 
         public override object Insert(Sys_Permission model)
         {
-            model.Id = Guid.NewGuid().ToString();
-            model.Layer = _permissionRepository.Get(model.ParentId).Layer += 1;
+            //model.Id = Guid.NewGuid().ToString();
+            model.Layer = !model.ParentId.HasValue ? 0 : _permissionRepository.Get(model.ParentId.Value).Layer += 1;
             model.IsEnable = model.IsEnable == null ? false : true;
             model.IsEdit = model.IsEdit == null ? false : true;
             model.IsPublic = model.IsPublic == null ? false : true;
@@ -42,7 +42,7 @@ namespace Elight.Service
 
         public override int Update(Sys_Permission model)
         {
-            model.Layer = _permissionRepository.Get(model.ParentId).Layer += 1;
+            model.Layer = !model.ParentId.HasValue ? 0 : _permissionRepository.Get(model.ParentId.Value).Layer += 1;
             model.IsEnable = model.IsEnable == null ? false : true;
             model.IsEdit = model.IsEdit == null ? false : true;
             model.IsPublic = model.IsPublic == null ? false : true;
@@ -55,12 +55,7 @@ namespace Elight.Service
             return _permissionRepository.Update(model, updateColumns);
         }
 
-        public List<Sys_Permission> GetList()
-        {
-            return _permissionRepository.GetList();
-        }
-
-        public List<Sys_Permission> GetList(string userId)
+        public List<Sys_Permission> GetList(Guid userId)
         {
             //a.根据用户ID查询角色ID集合 （一对多关系）
             var listRoleIds = _userRoleRelationRepository.GetList(userId).Select(c => c.RoleId).ToList();
@@ -75,7 +70,7 @@ namespace Elight.Service
             return _permissionRepository.GetList(pageIndex, pageSize, keyWord);
         }
 
-        public bool ActionValidate(string userId, string action)
+        public bool ActionValidate(Guid userId, string action)
         {
             var authorizeModules = new List<Sys_Permission>();
             authorizeModules = WebHelper.GetCache<List<Sys_Permission>>("authorize_modules_" + userId);
@@ -99,14 +94,14 @@ namespace Elight.Service
             return false;
         }
 
-        public int Delete(params string[] primaryKeys)
+        public override int Delete(params Guid[] primaryKeys)
         {
             //删除权限与角色的对应关系。
-            _roleAuthorizeRepository.Delete(primaryKeys);
+            _roleAuthorizeRepository.Delete(t => primaryKeys.Contains(t.ModuleId.Value));
             return _permissionRepository.Delete(primaryKeys);
         }
 
-        public long GetChildCount(string parentId)
+        public long GetChildCount(Guid parentId)
         {
             return _permissionRepository.GetChildCount(parentId);
         }

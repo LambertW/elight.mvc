@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Elight.IRepository
 {
-    public partial interface ILogRepository : IBaseRepository<Sys_Log, string>
+    public partial interface ILogRepository : IBaseRepository<Sys_Log, Guid>
     {
         /// <summary>
         /// 分页获取指定用户操作记录。

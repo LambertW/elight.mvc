@@ -9,7 +9,7 @@ using Elight.IRepository;
 
 namespace Elight.Repository
 {
-    public partial class ItemRepository : BaseRepository<Sys_Item, string>, IItemRepository
+    public partial class ItemRepository : BaseRepository<Sys_Item, Guid>, IItemRepository
     {
         public override List<Sys_Item> GetList()
         {
@@ -25,9 +25,9 @@ namespace Elight.Repository
             return ToPage(condition, pageIndex, pageSize, "SortCode");
         }
 
-        public long GetChildCount(string parentId)
+        public long GetChildCount(Guid parentId)
         {
-            return Count(t => t.ParentId == parentId.ToString());
+            return Count(t => t.ParentId == parentId);
         }
     }
 }

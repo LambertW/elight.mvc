@@ -11,28 +11,23 @@ using Elight.Entity.ResponseModels;
 
 namespace Elight.Service
 {
-    public partial class ItemsDetailService : BaseService<Sys_ItemsDetail, string>, IItemsDetailService
+    public partial class ItemsDetailService : BaseService<Sys_ItemsDetail, Guid>, IItemsDetailService
     {
         private readonly IItemsDetailRepository _itemsDetailRepository;
 
-        public ItemsDetailService(IItemsDetailRepository itemsDetailRepository)
+        public ItemsDetailService(IItemsDetailRepository itemsDetailRepository) : base(itemsDetailRepository)
         {
-            this._itemsDetailRepository = itemsDetailRepository;
+            _itemsDetailRepository = itemsDetailRepository;
         }
 
-        public Page<Sys_ItemsDetail> GetList(int pageIndex, int pageSize, string itemId, string keyWord)
+        public Page<Sys_ItemsDetail> GetList(int pageIndex, int pageSize, Guid itemId, string keyWord)
         {
             return _itemsDetailRepository.GetList(pageIndex, pageSize, itemId, keyWord);
         }
 
-        public int Delete(string itemId)
-        {
-            return _itemsDetailRepository.Delete(itemId);
-        }
-
         public override object Insert(Sys_ItemsDetail model)
         {
-            model.Id = Guid.NewGuid().ToString();
+            //model.Id = Guid.NewGuid().ToString();
             model.IsEnabled = model.IsEnabled == null ? false : true;
             model.IsDefault = model.IsDefault == null ? false : true;
             model.DeleteMark = false;

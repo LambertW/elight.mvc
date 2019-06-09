@@ -9,7 +9,7 @@ using Elight.IRepository;
 
 namespace Elight.Repository
 {
-    public partial class RoleRepository : BaseRepository<Sys_Role, string>, IRoleRepository
+    public partial class RoleRepository : BaseRepository<Sys_Role, Guid>, IRoleRepository
     {
         public Page<Sys_Role> GetList(int pageIndex, int pageSize, string keyWord)
         {
@@ -40,11 +40,6 @@ namespace Elight.Repository
                 });
 
             return new Page<Sys_Role> { Items = items, TotalItems = total };
-        }
-
-        public int Delete(params string[] primaryKeys)
-        {
-            return Delete(t => primaryKeys.Contains(t.Id));
         }
 
         public override List<Sys_Role> GetList()
