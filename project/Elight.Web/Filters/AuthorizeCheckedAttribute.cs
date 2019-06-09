@@ -40,7 +40,5 @@ namespace Elight.Web.Filters
                 filterContext.Result = new ContentResult() { Content = script.ToString() };
             }
         }
-
-
     }
 }

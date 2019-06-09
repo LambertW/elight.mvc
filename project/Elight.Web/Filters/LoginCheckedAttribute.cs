@@ -12,7 +12,6 @@ namespace Elight.Web.Filters
     /// </summary>
     public class LoginCheckedAttribute : ActionFilterAttribute
     {
-
         public bool Ignore { get; set; }
         public LoginCheckedAttribute(bool ignore = true)
         {
