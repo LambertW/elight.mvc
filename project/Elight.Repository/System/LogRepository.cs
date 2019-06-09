@@ -17,7 +17,7 @@ namespace Elight.Repository
                 .Where(t => t.CreateTime > limitDate)
                 .Where(t => t.Account.Contains(keyWord) || t.RealName.Contains(keyWord));
 
-            return ToPage(condition, pageIndex, pageSize, "CreateTime");
+            return ToPage(condition, pageIndex, pageSize, "CreateTime DESC");
         }
 
         public int Delete(DateTime keepDate)

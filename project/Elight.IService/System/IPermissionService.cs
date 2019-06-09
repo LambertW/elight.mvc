@@ -32,7 +32,7 @@ namespace Elight.IService
         /// <param name="userId">用户ID</param>
         /// <param name="action">请求URL</param>
         /// <returns></returns>
-        bool ActionValidate(Guid userId, string action);
+        Sys_Permission ActionValidate(Guid userId, string action);
 
         /// <summary>
         /// 获取子级权限数量。

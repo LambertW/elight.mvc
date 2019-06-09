@@ -35,8 +35,10 @@ namespace Elight.Infrastructure
         /// <param name="realName">真实姓名</param>
         public static void Write(Level level, string operation, string message, string account, string realName)
         {
-            LogEventInfo logEvent = new LogEventInfo();
-            logEvent.Message = message;
+            LogEventInfo logEvent = new LogEventInfo
+            {
+                Message = message
+            };
             switch (level)
             {
                 case Level.Trace:

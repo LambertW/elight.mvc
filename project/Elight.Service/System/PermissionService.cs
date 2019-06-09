@@ -70,16 +70,9 @@ namespace Elight.Service
             return _permissionRepository.GetList(pageIndex, pageSize, keyWord);
         }
 
-        public bool ActionValidate(Guid userId, string action)
+        public Sys_Permission ActionValidate(Guid userId, string action)
         {
-            var authorizeModules = new List<Sys_Permission>();
-            authorizeModules = WebHelper.GetCache<List<Sys_Permission>>("authorize_modules_" + userId);
-            if (authorizeModules == null)
-            {
-                authorizeModules = this.GetList(userId);
-                //设置缓存有效时间20分钟。
-                WebHelper.SetCache<List<Sys_Permission>>("authorize_modules_" + userId, authorizeModules, DateTime.Now.AddMinutes(20));
-            }
+            List<Sys_Permission> authorizeModules = GetAuthorizeModules(userId);
             foreach (var item in authorizeModules)
             {
                 if (!string.IsNullOrEmpty(item.Url))
@@ -87,11 +80,24 @@ namespace Elight.Service
                     string[] url = item.Url.Split('?');
                     if (url[0].ToLower() == action.ToLower())
                     {
-                        return true;
+                        return item;
                     }
                 }
             }
-            return false;
+            return null;
+        }
+
+        private List<Sys_Permission> GetAuthorizeModules(Guid userId)
+        {
+            var authorizeModules = WebHelper.GetCache<List<Sys_Permission>>("authorize_modules_" + userId);
+            if (authorizeModules == null)
+            {
+                authorizeModules = GetList(userId);
+                //设置缓存有效时间20分钟。
+                WebHelper.SetCache<List<Sys_Permission>>("authorize_modules_" + userId, authorizeModules, DateTime.Now.AddMinutes(20));
+            }
+
+            return authorizeModules;
         }
 
         public override int Delete(params Guid[] primaryKeys)
