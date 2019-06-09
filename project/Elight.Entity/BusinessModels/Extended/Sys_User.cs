@@ -1,4 +1,5 @@
 ﻿using FreeSql.DataAnnotations;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,13 @@ namespace Elight.Entity
         /// <summary>
         /// 保存角色部门名称。
         /// </summary>
-        [Column(IsIgnore = true)]
+        [Column(IsIgnore = true), JsonProperty]
         public string DeptName { get; set; }
 
         /// <summary>
         /// 保存用户角色ID。
         /// </summary>
-        [Column(IsIgnore = true)]
+        [Column(IsIgnore = true), JsonProperty]
         public List<string> RoleId { get; set; }
     }
 }
